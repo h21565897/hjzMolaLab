@@ -9,6 +9,7 @@ function myclick(){
 }
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if(request.type=="error"){
-    messageb.innerText="Something is wrong,please try soon"
+    //Todo: proceed different kinds of errors
+    messageb.innerText="Something tweets may be wrong and do not proceeed successfully"
   }
 });
