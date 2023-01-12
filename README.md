@@ -1,6 +1,9 @@
 # hjzMolaLab
 
 The project is for the MOLA lab challenge.
+The pycontainer includes the googlecloud deploying files and the python file I use to do language detection and sentiment score
+Other files in the root are the chrome extension files.
+
 
 Hello Professor, my name is Junzhou He, and I am a first-year student in the Viterbi School of Engineering at USC, majoring in Computer Science. I have extensive experience in backend engineering and have previously interned at Tencent Technology in China, one of the largest internet companies in the country. I possess a strong ability to learn new things and, although my undergraduate degree is not in computer science, I have gained a lot of knowledge in software engineering. In fact, I received a full-time job offer after my internship, but I decided to come to USC to further my studies.
 
