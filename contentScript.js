@@ -4,15 +4,15 @@ let languageDetectUrl = "https://mola-2hy6h5prjq-uw.a.run.app/api/language-detec
 let sentimentScoreUrl = "https://mola-2hy6h5prjq-uw.a.run.app/api/sentiment-score";
 
 async function getMood(tweetText) {
-  let langDetectRes = await fetch(languageDetectUrl, {
-    method: "POST",
-    body: JSON.stringify({ tweet_text: tweetText }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
   let langDetectResJson
   try{
+    let langDetectRes = await fetch(languageDetectUrl, {
+      method: "POST",
+      body: JSON.stringify({ tweet_text: tweetText }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     langDetectResJson = await langDetectRes.json();
   }catch(error){
     console.log("Error:",error)
@@ -20,14 +20,14 @@ async function getMood(tweetText) {
   }
   for (const oneTweet of langDetectResJson) {
     if (oneTweet.isEnglish == true) {
-      let sentiRes = await fetch(sentimentScoreUrl, {
-        method: "POST",
-        body: JSON.stringify({ tweet_text: oneTweet.tweet_text }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
       try{
+        let sentiRes = await fetch(sentimentScoreUrl, {
+          method: "POST",
+          body: JSON.stringify({ tweet_text: oneTweet.tweet_text }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         let sentiResJson = await sentiRes.json();
         console.log(sentiResJson);
         return sentiResJson
@@ -66,14 +66,18 @@ async function solve(oneTweet){
     let sentiRes=await getMood(tweetText)
     if(sentiRes!=null){
         appendMoodAndEmoji(oneTweet,sentiRes[0])
+    }else{
+      chrome.runtime.sendMessage({type:"error"})
     }
 }
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(request.greeting);
-  let allTweets = document.querySelectorAll("[data-testid=tweet]");
-  for (const oneTweet of allTweets) {
-    if(oneTweet.querySelector("[mola-extension=ext]")==null){
-      solve(oneTweet)
+  console.log(request.type)
+  if(request.type=="execute"){
+    let allTweets = document.querySelectorAll("[data-testid=tweet]");
+    for (const oneTweet of allTweets) {
+      if(oneTweet.querySelector("[mola-extension=ext]")==null){
+        solve(oneTweet)
+      }
     }
-  }
+  }  
 });

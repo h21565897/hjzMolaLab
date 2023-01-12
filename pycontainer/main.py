@@ -13,6 +13,7 @@ def init():
 init()
 app=Flask(__name__)
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/api/language-detection',methods=['POST'])
 def languagedetection():
